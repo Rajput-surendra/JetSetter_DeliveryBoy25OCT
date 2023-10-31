@@ -136,7 +136,7 @@
   "cancelled": "Cancelled",
   "returned": "Returned",
   "processed": "Processed",
-  "shipped": "Shipped",
+  "shipped": "Picked Up",
   "received": "Received",
   "something Error Please Try again...!": "something Error Please Try again...!",
   "RETURN_REQUEST_PENDING_LBL": "Return Request Pending",

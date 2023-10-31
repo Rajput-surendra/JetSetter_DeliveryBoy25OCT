@@ -289,6 +289,7 @@ class StateOrder extends State<OrderDetail> with TickerProviderStateMixin {
       val = orderItem.varient_values!.split(',');
     }
     print('____ddd______${orderItem.status}_________');
+
     return Padding(
       padding: const EdgeInsets.only(top: 10.0),
       child: Container(
@@ -361,6 +362,7 @@ class StateOrder extends State<OrderDetail> with TickerProviderStateMixin {
                             shrinkWrap: true,
                             itemCount: att.length,
                             itemBuilder: (context, index) {
+
                               return Padding(
                                 padding:
                                 const EdgeInsets.only(bottom: 10),
@@ -592,7 +594,7 @@ class StateOrder extends State<OrderDetail> with TickerProviderStateMixin {
                                           orderItem.status ==
                                               'return_request_decline')
                                           ? null
-                                          : orderItem.status,
+                                          : orderItem.status == 'shipped' ? 'picked up' : orderItem.status,
                                       onChanged: (dynamic newValue) {
                                         setState(
                                               () {
@@ -624,10 +626,10 @@ class StateOrder extends State<OrderDetail> with TickerProviderStateMixin {
                                                }
                                                 if (StringValidation
                                                     .capitalize(st) ==
-                                                    "Shipped") {
+                                                    "Picked Up") {
                                                   return getTranslated(
                                                       context,
-                                                      "shipped")!;
+                                                      "Picked Up")!;
                                                 } else if (StringValidation
                                                     .capitalize(st) ==
                                                     "Delivered") {

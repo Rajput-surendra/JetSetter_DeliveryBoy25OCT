@@ -137,8 +137,8 @@ class OrderIteam extends StatelessWidget {
                           else if (model.itemList![0].status! ==
                               "processed") {
                             return getTranslated(context, "processed")!;
-                          } else if (model.itemList![0].status! == "picked") {
-                            return getTranslated(context, "picked")!;
+                          } else if (model.itemList![0].status! == "shipped") {
+                            return getTranslated(context, "shipped")!;
                           // } else if (model.itemList![0].status! == "received") {
                           //   return getTranslated(context, "received")!;
                           } else if (model.itemList![0].status! ==

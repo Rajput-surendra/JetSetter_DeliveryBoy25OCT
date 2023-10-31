@@ -122,6 +122,7 @@ class PushNotificationService {
     var androidPlatformChannelSpecifics = AndroidNotificationDetails(
         'big text channel id', 'big text channel name',
         channelDescription: 'big text channel description',
+        icon: '@mipmap/ic_launcher',
         largeIcon: FilePathAndroidBitmap(largeIconPath),
         styleInformation: bigPictureStyleInformation,
         playSound: true,
@@ -143,6 +144,7 @@ class PushNotificationService {
       channelDescription: 'your channel description',
       importance: Importance.max,
       priority: Priority.high,
+        icon: '@mipmap/ic_launcher',
       ticker: 'ticker',
       playSound: true,
       enableVibration: true,
