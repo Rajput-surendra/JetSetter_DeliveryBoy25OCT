@@ -90,16 +90,17 @@ class _GetDrawerWidgetState extends State<GetDrawerWidget> {
               ),
             ),
           );
-        } else if (title == getTranslated(context, CASH_COLL)) {
-          Navigator.push(
-            context,
-            CupertinoPageRoute(
-              builder: (context) => CashCollection(
-                isBack: true,
-              ),
-            ),
-          );
         }
+        //   else if (title == getTranslated(context, CASH_COLL)) {
+        //   Navigator.push(
+        //     context,
+        //     CupertinoPageRoute(
+        //       builder: (context) => CashCollection(
+        //         isBack: true,
+        //       ),
+        //     ),
+        //   );
+        // }
       },
     );
   }
@@ -123,11 +124,11 @@ class _GetDrawerWidgetState extends State<GetDrawerWidget> {
                 getTranslated(context, WALLET)!,
                 Icons.account_balance_wallet_outlined,
               ),
-              _getDrawerItem(
-                2,
-                getTranslated(context, CASH_COLL)!,
-                Icons.money_outlined,
-              ),
+              // _getDrawerItem(
+              //   2,
+              //   getTranslated(context, CASH_COLL)!,
+              //   Icons.money_outlined,
+              // ),
               // _getDrawerItem(
               //   5,
               //   getTranslated(context, ChangeLanguage)!,

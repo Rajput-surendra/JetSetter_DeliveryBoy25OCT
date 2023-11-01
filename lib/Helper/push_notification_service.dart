@@ -116,8 +116,6 @@ class PushNotificationService {
         contentTitle: title,
         htmlFormatContentTitle: true,
         summaryText: msg,
-
-
         htmlFormatSummaryText: true);
     var androidPlatformChannelSpecifics = AndroidNotificationDetails(
         'big text channel id', 'big text channel name',
