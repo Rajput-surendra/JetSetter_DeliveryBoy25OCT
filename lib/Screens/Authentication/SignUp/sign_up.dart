@@ -27,7 +27,6 @@ import '../../../Widget/parameterString.dart';
 import '../../../Widget/setSnackbar.dart';
 import '../../../Widget/translateVariable.dart';
 import '../../../Widget/validation.dart';
-import '../../DeshBord/deshBord.dart';
 import '../../Home/home.dart';
 
 class SignUp extends StatefulWidget {

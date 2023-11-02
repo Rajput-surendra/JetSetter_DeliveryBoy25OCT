@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../Helper/color.dart';
-import '../Screens/DeshBord/deshBord.dart';
+import '../Screens/Deshboard/Deshboard.dart';
 
 floatingBtn(BuildContext context) {
   return Container(

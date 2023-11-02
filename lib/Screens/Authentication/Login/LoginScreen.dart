@@ -20,7 +20,7 @@ import '../../../Widget/parameterString.dart';
 import '../../../Widget/setSnackbar.dart';
 import '../../../Widget/translateVariable.dart';
 import '../../../Widget/validation.dart';
-import '../../DeshBord/deshBord.dart';
+import '../../Deshboard/Deshboard.dart';
 import '../send_otp.dart';
 
 class Login extends StatefulWidget {

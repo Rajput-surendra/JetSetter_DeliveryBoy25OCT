@@ -7,7 +7,7 @@ import '../../Provider/SettingsProvider.dart';
 import '../../Widget/parameterString.dart';
 import '../../Widget/systemChromeSettings.dart';
 import '../Authentication/Login/LoginScreen.dart';
-import '../DeshBord/deshBord.dart';
+import '../Deshboard/Deshboard.dart';
 
 //splash screen of app
 class Splash extends StatefulWidget {

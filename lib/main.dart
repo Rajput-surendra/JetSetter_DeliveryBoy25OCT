@@ -22,7 +22,7 @@ import 'Provider/cashCollectionProvider.dart';
 import 'Provider/homeProvider.dart';
 import 'Provider/notificationListProvider.dart';
 import 'Provider/orderDetailProvider.dart';
-import 'Screens/DeshBord/deshBord.dart';
+import 'Screens/Deshboard/Deshboard.dart';
 import 'Screens/Splash/splash.dart';
 import 'Widget/systemChromeSettings.dart';
 import 'firebase_options.dart';
