@@ -262,7 +262,7 @@ class StateHome extends State<Home> with TickerProviderStateMixin {
                                                             textAlign:
                                                                 TextAlign.left),
                                                       ),
-                                                      Padding(
+                                                      CUR_BALANCE == null ?Center(child: CircularProgressIndicator()):   Padding(
                                                         padding:
                                                             const EdgeInsetsDirectional
                                                                 .only(

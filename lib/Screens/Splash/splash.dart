@@ -1,8 +1,10 @@
 import 'dart:async';
 import 'package:deliveryboy_multivendor/Widget/desing.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../../Helper/push_notification_service.dart';
 import '../../Provider/SettingsProvider.dart';
 import '../../Widget/parameterString.dart';
 import '../../Widget/systemChromeSettings.dart';
@@ -20,6 +22,12 @@ class _SplashScreen extends State<Splash> {
   bool isFirstTime = false;
   @override
   void initState() {
+    FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
+      alert: true, // Required to display a heads up notification
+      badge: true,
+      sound: true,
+    );
+    FirebaseMessaging.onBackgroundMessage(myForgroundMessageHandler);
     SystemChromeSettings.setSystemButtomNavigationonlyTop();
     SystemChromeSettings.setSystemUIOverlayStyleWithLightBrightNessStyle();
     super.initState();

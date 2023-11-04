@@ -30,7 +30,7 @@ class DetailHeader extends StatelessWidget {
             ),
             CommanDesingWidget(
               index: 1,
-              title: 'Received',
+              title: 'Processed',
               update: update,
             ),
             // CommanDesingWidget(

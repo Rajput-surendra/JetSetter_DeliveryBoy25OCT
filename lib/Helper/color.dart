@@ -13,6 +13,7 @@ const MaterialColor primary_app = const MaterialColor(
     700: primary,
     800: primary,
     900: primary,
+    1000: primary,
   },
 );
 

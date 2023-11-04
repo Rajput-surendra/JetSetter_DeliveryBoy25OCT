@@ -7,8 +7,10 @@ import 'package:deliveryboy_multivendor/Provider/signupProvider.dart';
 import 'package:deliveryboy_multivendor/Provider/zipcodeListProvider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -26,7 +28,8 @@ import 'Screens/Deshboard/Deshboard.dart';
 import 'Screens/Splash/splash.dart';
 import 'Widget/systemChromeSettings.dart';
 import 'firebase_options.dart';
-
+late AndroidNotificationChannel channel;
+late FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   if (Platform.isIOS) {
@@ -38,12 +41,28 @@ void main() async {
   } else {
     await Firebase.initializeApp();
   }
-
+  FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
+    alert: true, // Required to display a heads up notification
+    badge: true,
+    sound: true,
+  );
   SystemChromeSettings.setSystemButtomNavigationonlyTop();
   SystemChromeSettings.setSystemUIOverlayStyleWithLightBrightNessStyle();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   FirebaseMessaging.onBackgroundMessage(myForgroundMessageHandler);
   SharedPreferences prefs = await SharedPreferences.getInstance();
+  if (!kIsWeb) {
+    channel = const AndroidNotificationChannel(
+      'high_importance_channel', // id
+      'High Importance Notifications', // title
+      importance: Importance.high,
+    );
+    flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+    await flutterLocalNotificationsPlugin
+        .resolvePlatformSpecificImplementation<
+        AndroidFlutterLocalNotificationsPlugin>()
+        ?.createNotificationChannel(channel);
+  }
   runApp(
     MyApp(
       sharedPreferences: prefs,

@@ -57,12 +57,14 @@ class PushNotificationService {
         var body = data.body.toString();
         var image = message.data['image'] ?? '';
         var type = '';
+        var orderId = '';
         type = message.data['type'] ?? '';
+        orderId = message.data['order_id'] ?? '';
 
         if (image != null && image != 'null' && image != '') {
-          generateImageNotication(title, body, image, type);
+          generateImageNotication(title, body, image, type,orderId);
         } else {
-          generateSimpleNotication(title, body, type);
+          generateSimpleNotication(title, body, type,orderId);
         }
       },
     );
@@ -106,8 +108,67 @@ class PushNotificationService {
     return filePath;
   }
 
-  static Future<void> generateImageNotication(
-      String title, String msg, String image, String type) async {
+  // static Future<void> generateImageNotication(
+  //     String title, String msg, String image, String type) async {
+  //   var largeIconPath = await _downloadAndSaveImage(image, 'largeIcon');
+  //   var bigPicturePath = await _downloadAndSaveImage(image, 'bigPicture');
+  //   var bigPictureStyleInformation = BigPictureStyleInformation(
+  //       FilePathAndroidBitmap(bigPicturePath),
+  //       hideExpandedLargeIcon: true,
+  //       contentTitle: title,
+  //       htmlFormatContentTitle: true,
+  //       summaryText: msg,
+  //       htmlFormatSummaryText: true);
+  //   var androidPlatformChannelSpecifics = AndroidNotificationDetails(
+  //       // 'big text channel id', 'big text channel name',
+  //       // channelDescription: 'big text channel description',
+  //       // icon: '@mipmap/ic_launcher',
+  //       // largeIcon: FilePathAndroidBitmap(largeIconPath),
+  //       // styleInformation: bigPictureStyleInformation,
+  //       // playSound: true,
+  //       // enableVibration: true,
+  //       // enableLights: true,
+  //       // sound: RawResourceAndroidNotificationSound('test')
+  //
+  //       'big text channel id', 'big text channel name',
+  //       channelDescription: 'big text channel description',
+  //       icon: '@mipmap/ic_launcher',
+  //       largeIcon: FilePathAndroidBitmap(largeIconPath),
+  //       styleInformation: bigPictureStyleInformation,
+  //       playSound: true,
+  //       enableVibration: true,
+  //       enableLights: true,
+  //       sound: RawResourceAndroidNotificationSound('test')
+  //   );
+  //   var platformChannelSpecifics =
+  //       NotificationDetails(android: androidPlatformChannelSpecifics);
+  //   await flutterLocalNotificationsPlugin
+  //       .show(0, title, msg, platformChannelSpecifics, payload: type);
+  // }
+
+  // static Future<void> generateSimpleNotication(
+  //     String title, String msg, String type) async {
+  //   var androidPlatformChannelSpecifics = AndroidNotificationDetails(
+  //     'your channel id',
+  //     'your channel name',
+  //     channelDescription: 'your channel description',
+  //     importance: Importance.max,
+  //     priority: Priority.high,
+  //       icon: '@mipmap/ic_launcher',
+  //     ticker: 'ticker',
+  //     playSound: true,
+  //     enableVibration: true,
+  //     enableLights: true,
+  //     sound: RawResourceAndroidNotificationSound('test')
+  //   );
+  //
+  //   var platformChannelSpecifics =
+  //       NotificationDetails(android: androidPlatformChannelSpecifics);
+  //   await flutterLocalNotificationsPlugin
+  //       .show(0, title, msg, platformChannelSpecifics, payload: type);
+  // }
+  Future<void> generateImageNotication(String title, String msg, String image,
+      String type, String payload) async {
     var largeIconPath = await _downloadAndSaveImage(image, 'largeIcon');
     var bigPicturePath = await _downloadAndSaveImage(image, 'bigPicture');
     var bigPictureStyleInformation = BigPictureStyleInformation(
@@ -123,39 +184,63 @@ class PushNotificationService {
         icon: '@mipmap/ic_launcher',
         largeIcon: FilePathAndroidBitmap(largeIconPath),
         styleInformation: bigPictureStyleInformation,
+        // playSound: true,
+        enableVibration: true,
+        enableLights: true,
+       // sound: RawResourceAndroidNotificationSound('test')
+
+      playSound: true,
+      sound: RawResourceAndroidNotificationSound('test'),
+      importance: Importance.max,
+      priority: Priority.high,
+    );
+    var platformChannelSpecifics =
+    NotificationDetails(android: androidPlatformChannelSpecifics);
+    await flutterLocalNotificationsPlugin.show(
+        0, title, msg, platformChannelSpecifics,
+        payload: '$type,$payload');
+  }
+
+  Future<void> generateSimpleNotication(
+      String title, String msg, String type, String id) async {
+    AndroidNotificationDetails androidPlatformChannelSpecifics = AndroidNotificationDetails(
+        'your channel id',
+        'your channel name',
+        channelDescription: 'your channel description',
+        importance: Importance.max,
+        priority: Priority.high,
+        icon: '@mipmap/ic_launcher',
+        ticker: 'ticker',
         playSound: true,
         enableVibration: true,
         enableLights: true,
         sound: RawResourceAndroidNotificationSound('test')
     );
-    var platformChannelSpecifics =
-        NotificationDetails(android: androidPlatformChannelSpecifics);
-    await flutterLocalNotificationsPlugin
-        .show(0, title, msg, platformChannelSpecifics, payload: type);
-  }
 
-  static Future<void> generateSimpleNotication(
-      String title, String msg, String type) async {
-    var androidPlatformChannelSpecifics = AndroidNotificationDetails(
-      'your channel id',
-      'your channel name',
-      channelDescription: 'your channel description',
-      importance: Importance.max,
-      priority: Priority.high,
-        icon: '@mipmap/ic_launcher',
-      ticker: 'ticker',
-      playSound: true,
-      enableVibration: true,
-      enableLights: true,
-      sound: RawResourceAndroidNotificationSound('test')
-    );
 
-    var platformChannelSpecifics =
-        NotificationDetails(android: androidPlatformChannelSpecifics);
+    // var androidPlatformChannelSpecifics = AndroidNotificationDetails(
+    //     'high_importance_channel', 'High Importance Notifications',
+    //     channelDescription: 'your channel description',
+    //     importance: Importance.max,
+    //     icon: '@mipmap/ic_launcher',
+    //     priority: Priority.high,
+    //     ticker: 'ticker',
+    //     playSound: true,
+    //     enableVibration: true,
+    //     enableLights: true,
+    //     sound: RawResourceAndroidNotificationSound('test')
+    // );
+    // var iosDetail = IOSNotificationDetails();
+
+    var platformChannelSpecifics = NotificationDetails(
+        android: androidPlatformChannelSpecifics);
     await flutterLocalNotificationsPlugin
-        .show(0, title, msg, platformChannelSpecifics, payload: type);
+        .show(0, title, msg, platformChannelSpecifics, payload: type + "," + id);
   }
 }
+
+
+
 
 Future<dynamic> myForgroundMessageHandler(RemoteMessage message) async {
   return Future<void>.value();
