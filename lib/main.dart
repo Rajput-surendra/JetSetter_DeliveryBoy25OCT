@@ -49,9 +49,9 @@ void main() async {
   SystemChromeSettings.setSystemButtomNavigationonlyTop();
   SystemChromeSettings.setSystemUIOverlayStyleWithLightBrightNessStyle();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-  FirebaseMessaging.onBackgroundMessage(myForgroundMessageHandler);
+  FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
   SharedPreferences prefs = await SharedPreferences.getInstance();
-  if (!kIsWeb) {
+  /*if (!kIsWeb) {
     channel = const AndroidNotificationChannel(
       'high_importance_channel', // id
       'High Importance Notifications', // title
@@ -62,7 +62,7 @@ void main() async {
         .resolvePlatformSpecificImplementation<
         AndroidFlutterLocalNotificationsPlugin>()
         ?.createNotificationChannel(channel);
-  }
+  }*/
   runApp(
     MyApp(
       sharedPreferences: prefs,
@@ -184,4 +184,7 @@ class _MyAppState extends State<MyApp> {
       ),
     );
   }
+
+
 }
+

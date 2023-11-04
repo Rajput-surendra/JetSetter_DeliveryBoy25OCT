@@ -48,26 +48,21 @@ class PushNotificationService {
 
     flutterLocalNotificationsPlugin.initialize(initializationSettings);
 
-    FirebaseMessaging.onMessage.listen(
-      (RemoteMessage message) {
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      var data = message.notification!;
 
-        var data = message.notification!;
+      var title = data.title.toString();
+      var body = data.body.toString();
+      var image = message.data['image'] ?? '';
+      var type ='';
+      type=message.data['type'] ?? '';
+      if (image != null && image != 'null' && image != '') {
+        generateImageNotication(title, body, image, type);
+      } else {
+        generateSimpleNotication(title, body, type);
+      }
+    });
 
-        var title = data.title.toString();
-        var body = data.body.toString();
-        var image = message.data['image'] ?? '';
-        var type = '';
-        var orderId = '';
-        type = message.data['type'] ?? '';
-        orderId = message.data['order_id'] ?? '';
-
-        if (image != null && image != 'null' && image != '') {
-          generateImageNotication(title, body, image, type,orderId);
-        } else {
-          generateSimpleNotication(title, body, type,orderId);
-        }
-      },
-    );
   }
 
   void permission() async {
@@ -167,11 +162,14 @@ class PushNotificationService {
   //   await flutterLocalNotificationsPlugin
   //       .show(0, title, msg, platformChannelSpecifics, payload: type);
   // }
-  Future<void> generateImageNotication(String title, String msg, String image,
-      String type, String payload) async {
+  static Future<void> generateImageNotication(
+
+      String title, String msg, String image,String type) async {
+    print('__________surendra_________');
     var largeIconPath = await _downloadAndSaveImage(image, 'largeIcon');
     var bigPicturePath = await _downloadAndSaveImage(image, 'bigPicture');
     var bigPictureStyleInformation = BigPictureStyleInformation(
+
         FilePathAndroidBitmap(bigPicturePath),
         hideExpandedLargeIcon: true,
         contentTitle: title,
@@ -179,69 +177,53 @@ class PushNotificationService {
         summaryText: msg,
         htmlFormatSummaryText: true);
     var androidPlatformChannelSpecifics = AndroidNotificationDetails(
-        'big text channel id', 'big text channel name',
-        channelDescription: 'big text channel description',
-        icon: '@mipmap/ic_launcher',
+        'big text channel id',
+        'big text channel name',
+        channelDescription:'big text channel description',
         largeIcon: FilePathAndroidBitmap(largeIconPath),
-        styleInformation: bigPictureStyleInformation,
         // playSound: true,
-        enableVibration: true,
-        enableLights: true,
-       // sound: RawResourceAndroidNotificationSound('test')
+        // sound: RawResourceAndroidNotificationSound('test'),
 
-      playSound: true,
-      sound: RawResourceAndroidNotificationSound('test'),
-      importance: Importance.max,
-      priority: Priority.high,
-    );
+        styleInformation: bigPictureStyleInformation);
     var platformChannelSpecifics =
     NotificationDetails(android: androidPlatformChannelSpecifics);
     await flutterLocalNotificationsPlugin.show(
-        0, title, msg, platformChannelSpecifics,
-        payload: '$type,$payload');
+        0, title, msg, platformChannelSpecifics,payload: type);
   }
 
-  Future<void> generateSimpleNotication(
-      String title, String msg, String type, String id) async {
-    AndroidNotificationDetails androidPlatformChannelSpecifics = AndroidNotificationDetails(
-        'your channel id',
-        'your channel name',
-        channelDescription: 'your channel description',
-        importance: Importance.max,
-        priority: Priority.high,
-        icon: '@mipmap/ic_launcher',
-        ticker: 'ticker',
+  static Future<void> generateSimpleNotication(String title, String msg,String type) async {
+    print('__________hhhhhhhh_________');
+    var androidPlatformChannelSpecifics = AndroidNotificationDetails(
+        'default_notification_channel', 'your channel name', channelDescription:'your channel description',
+        importance: Importance.max, priority: Priority.high,
         playSound: true,
         enableVibration: true,
         enableLights: true,
-        sound: RawResourceAndroidNotificationSound('test')
+        color: const Color.fromARGB(255, 255, 0, 0),
+        ledColor: const Color.fromARGB(255, 255, 0, 0),
+        ledOnMs: 1000,
+        ledOffMs: 500,
+        sound: RawResourceAndroidNotificationSound('test'),
+        ticker: 'ticker'
     );
 
-
-    // var androidPlatformChannelSpecifics = AndroidNotificationDetails(
-    //     'high_importance_channel', 'High Importance Notifications',
-    //     channelDescription: 'your channel description',
-    //     importance: Importance.max,
-    //     icon: '@mipmap/ic_launcher',
-    //     priority: Priority.high,
-    //     ticker: 'ticker',
-    //     playSound: true,
-    //     enableVibration: true,
-    //     enableLights: true,
-    //     sound: RawResourceAndroidNotificationSound('test')
-    // );
-    // var iosDetail = IOSNotificationDetails();
-
-    var platformChannelSpecifics = NotificationDetails(
-        android: androidPlatformChannelSpecifics);
+    var platformChannelSpecifics =
+    NotificationDetails(android: androidPlatformChannelSpecifics);
     await flutterLocalNotificationsPlugin
-        .show(0, title, msg, platformChannelSpecifics, payload: type + "," + id);
+        .show(0, title, msg, platformChannelSpecifics, payload:type );
   }
+
+
+
+
 }
 
 
 
+@pragma('vm:entry-point')
+Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 
-Future<dynamic> myForgroundMessageHandler(RemoteMessage message) async {
-  return Future<void>.value();
+  // If you're going to use other Firebase services in the background, such as Firestore,
+  // make sure you call `initializeApp` before using other Firebase services.
+  print('Handling a background message ${message.messageId}');
 }

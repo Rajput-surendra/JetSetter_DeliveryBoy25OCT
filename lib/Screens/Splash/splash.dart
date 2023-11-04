@@ -22,12 +22,12 @@ class _SplashScreen extends State<Splash> {
   bool isFirstTime = false;
   @override
   void initState() {
-    FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
-      alert: true, // Required to display a heads up notification
-      badge: true,
-      sound: true,
-    );
-    FirebaseMessaging.onBackgroundMessage(myForgroundMessageHandler);
+    // FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
+    //   alert: true, // Required to display a heads up notification
+    //   badge: true,
+    //   sound: true,
+    // );
+   // FirebaseMessaging.onBackgroundMessage(myForgroundMessageHandler);
     SystemChromeSettings.setSystemButtomNavigationonlyTop();
     SystemChromeSettings.setSystemUIOverlayStyleWithLightBrightNessStyle();
     super.initState();
