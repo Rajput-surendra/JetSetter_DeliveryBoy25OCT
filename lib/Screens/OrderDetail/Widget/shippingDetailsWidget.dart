@@ -95,7 +95,7 @@ class ShippingDetails extends StatelessWidget {
                             ),
                             onPressed: () {
 
-                             Navigator.push(context, MaterialPageRoute(builder: (context) => UserMapScreen(userlat: model.latitude,userlang:model.longitude ,),));
+                             Navigator.push(context, MaterialPageRoute(builder: (context) => UserMapScreen(userlat: model.latitude,userlong:model.longitude ,),));
                               // _launchMap(
                               //   model.latitude,
                               //   model.longitude,

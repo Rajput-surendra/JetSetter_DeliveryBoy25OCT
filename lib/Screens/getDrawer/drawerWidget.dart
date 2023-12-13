@@ -1,8 +1,14 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../../Helper/color.dart';
 import '../../Helper/constant.dart';
+import '../../Provider/SettingsProvider.dart';
 import '../../Widget/parameterString.dart';
+import '../../Widget/parameterString.dart';
+import '../../Widget/setSnackbar.dart';
 import '../../Widget/translateVariable.dart';
 import '../../Widget/validation.dart';
 import '../CashCollection/cash_collection.dart';
@@ -13,6 +19,7 @@ import '../Home/Widget/getLogOutDialog.dart';
 import '../NotificationList/notification_lIst.dart';
 import '../Privacy policy/privacy_policy.dart';
 import '../WalletHistory/wallet_history.dart';
+import 'package:http/http.dart'as http;
 
 class GetDrawerWidget extends StatefulWidget {
   const GetDrawerWidget({Key? key}) : super(key: key);
@@ -104,7 +111,33 @@ class _GetDrawerWidgetState extends State<GetDrawerWidget> {
       },
     );
   }
+  getStatus(int status) async {
+    var headers = {
+      'Cookie': 'ci_session=8380ff83d04889e6ff2ef0c0cd5e47f95872c1d4'
+    };
+    var request = http.MultipartRequest('POST', Uri.parse('${baseUrl}online_ofline'));
+    print('____Uri.parse______${request}_________');
+    request.fields.addAll({
+      'user_id':"${CUR_USERID}",
+      'status':status.toString()
+    });
+    print('_____request.fields_____${request.fields}_________');
+    request.headers.addAll(headers);
+    http.StreamedResponse response = await request.send();
+    if (response.statusCode == 200) {
+      var result  = await response.stream.bytesToString();
+      var finalResult =  jsonDecode(result);
+      setState(() {
 
+      });
+      setSnackbar(finalResult['message'], context);
+    }
+    else {
+      print(response.reasonPhrase);
+    }
+
+  }
+  int status = 0; // 0: Offline, 1: Online
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -123,6 +156,28 @@ class _GetDrawerWidgetState extends State<GetDrawerWidget> {
                 7,
                 getTranslated(context, WALLET)!,
                 Icons.account_balance_wallet_outlined,
+              ),
+              Row(
+                children: [
+
+
+                  Switch(
+                    //activeColor: primary,inactiveThumbColor: secondary,
+                    value: status == 1,
+                    onChanged: (value) {
+                      setState(() {
+                        status = value ? 1 : 0;
+                        getStatus(status);
+                      });
+                    },
+                  ),
+                  Text(
+                    status == 1 ? 'Online' : 'Offline',
+                    style: TextStyle(fontSize: 15),
+                  ),
+
+
+                ],
               ),
               // _getDrawerItem(
               //   2,
