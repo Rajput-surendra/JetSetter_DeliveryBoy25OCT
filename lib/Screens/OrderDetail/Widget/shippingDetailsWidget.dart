@@ -7,6 +7,7 @@ import '../../../Model/order_model.dart';
 import '../../../Widget/setSnackbar.dart';
 import '../../../Widget/translateVariable.dart';
 import '../../../Widget/validation.dart';
+import '../../TrackLlocation/trackDriver.dart';
 
 class ShippingDetails extends StatelessWidget {
   Order_Model model;
@@ -93,10 +94,12 @@ class ShippingDetails extends StatelessWidget {
                               color: primary,
                             ),
                             onPressed: () {
-                              _launchMap(
-                                model.latitude,
-                                model.longitude,
-                              );
+
+                             Navigator.push(context, MaterialPageRoute(builder: (context) => UserMapScreen(userlat: model.latitude,userlang:model.longitude ,),));
+                              // _launchMap(
+                              //   model.latitude,
+                              //   model.longitude,
+                              // );
                             },
                           ),
                         )

@@ -27,8 +27,7 @@ class PushNotificationService {
     permission();
     messaging.getToken().then(
       (token) async {
-        SettingProvider settingProvider =
-            Provider.of<SettingProvider>(context, listen: false);
+        SettingProvider settingProvider = Provider.of<SettingProvider>(context, listen: false);
         CUR_USERID = await settingProvider.getPrefrence(ID);
         if (CUR_USERID != null && CUR_USERID != "") _registerToken(token);
       },
@@ -163,7 +162,6 @@ class PushNotificationService {
   //       .show(0, title, msg, platformChannelSpecifics, payload: type);
   // }
   static Future<void> generateImageNotication(
-
       String title, String msg, String image,String type) async {
     print('__________surendra_________');
     var largeIconPath = await _downloadAndSaveImage(image, 'largeIcon');
@@ -190,7 +188,6 @@ class PushNotificationService {
     await flutterLocalNotificationsPlugin.show(
         0, title, msg, platformChannelSpecifics,payload: type);
   }
-
   static Future<void> generateSimpleNotication(String title, String msg,String type) async {
     print('__________hhhhhhhh_________');
     var androidPlatformChannelSpecifics = AndroidNotificationDetails(
@@ -206,24 +203,14 @@ class PushNotificationService {
         sound: RawResourceAndroidNotificationSound('test'),
         ticker: 'ticker'
     );
-
     var platformChannelSpecifics =
     NotificationDetails(android: androidPlatformChannelSpecifics);
     await flutterLocalNotificationsPlugin
         .show(0, title, msg, platformChannelSpecifics, payload:type );
   }
-
-
-
-
 }
-
-
 
 @pragma('vm:entry-point')
 Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-
-  // If you're going to use other Firebase services in the background, such as Firestore,
-  // make sure you call `initializeApp` before using other Firebase services.
   print('Handling a background message ${message.messageId}');
 }

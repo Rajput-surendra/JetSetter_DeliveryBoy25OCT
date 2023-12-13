@@ -3,24 +3,22 @@
     package="com.jetsetter.driver">
     <uses-permission android:name="android.permission.INTERNET" />
     <queries>
-        <!-- If your app makes calls -->
         <intent>
             <action android:name="android.intent.action.DIAL" />
             <data android:scheme="tel" />
         </intent>
 
     </queries>
-    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission
         android:name="android.permission.NEARBY_WIFI_DEVICES"
         android:usesPermissionFlags="neverForLocation" />
-    <uses-permission
-        android:name="android.permission.ACCESS_FINE_LOCATION"
-        android:maxSdkVersion="32" />
-    <!--<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>-->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
+    <!--    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"-->
+<!--        android:maxSdkVersion="32" />-->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
     <uses-permission
@@ -68,7 +66,6 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
 
-
         </activity>
 
         <receiver
@@ -96,5 +93,8 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
+
+        <meta-data android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyAXL1tpx0xZORmWdCkqaStqHC4BhklFZ78"/>
     </application>
 </manifest>

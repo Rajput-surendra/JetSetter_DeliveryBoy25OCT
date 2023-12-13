@@ -6,7 +6,10 @@ import 'package:deliveryboy_multivendor/Helper/push_notification_service.dart';
 import 'package:deliveryboy_multivendor/Widget/setSnackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../Localization/Language_Constant.dart';
 import '../../Provider/SettingsProvider.dart';
 import '../../Provider/homeProvider.dart';
@@ -14,7 +17,6 @@ import '../../Widget/desing.dart';
 import '../../Widget/networkAvailablity.dart';
 import '../../Widget/noNetwork.dart';
 import '../../Widget/parameterString.dart';
-import '../../Widget/simmerEffect.dart';
 import '../../Widget/translateVariable.dart';
 import '../../Widget/validation.dart';
 import 'Widget/DetailHeader.dart';
@@ -63,6 +65,7 @@ class StateHome extends State<Home> with TickerProviderStateMixin {
 
   @override
   void initState() {
+    _startTimer();
     homeProvider = Provider.of<HomeProvider>(context, listen: false);
     settingProvider = Provider.of<SettingProvider>(context, listen: false);
     homeProvider!.offset = 0;
@@ -95,6 +98,51 @@ class StateHome extends State<Home> with TickerProviderStateMixin {
     super.initState();
   }
 
+
+
+   var lat;
+  var long;
+
+  Position? currentLocation;
+
+  Future getUserCurrentLocation() async {
+    var status = await Permission.location.request();
+    if (status.isDenied) {
+    } else if (status.isGranted) {
+      await Geolocator.getCurrentPosition(
+          desiredAccuracy: LocationAccuracy.high)
+          .then((position) {
+        if (mounted)
+          setState(() {
+            currentLocation = position;
+            lat = currentLocation?.latitude.toString();
+            long = currentLocation?.longitude.toString();
+          });
+      });
+      driverTrack(lat,long);
+    } else if (status.isPermanentlyDenied) {
+      openAppSettings();
+    }
+  }
+
+  late Timer timer;
+
+  void _startTimer() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    venderId = prefs.getString('venderId');
+    timer = Timer.periodic(Duration(seconds: 5), (timer) async {
+      await getUserCurrentLocation();
+    });
+  }
+
+  var venderId;
+  // @override
+  // void dispose() {
+  //   _timer.cancel();
+  //
+  //   super.dispose();
+  // }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -533,6 +581,32 @@ class StateHome extends State<Home> with TickerProviderStateMixin {
                   homeProvider!.buttonController,
                 ),
         ));
+  }
+
+
+
+  driverTrack(String lat1,long1) async {
+    var headers = {
+      'Cookie': 'ci_session=869a3e0261b7d606f44a68c823cacaacd8f8fdf2'
+    };
+    var request = http.MultipartRequest('POST', Uri.parse('${baseUrl}update_lat_lang'));
+    request.fields.addAll({
+      'user_id':CUR_USERID.toString(),
+      'lat':"${lat1.toString()}",
+      'lang':"${long1.toString()}"
+    });
+    print('__________${request.fields}_________');
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      print(await response.stream.bytesToString());
+    }
+    else {
+    print(response.reasonPhrase);
+    }
+
   }
   bool isloding = false;
   acceptRejectApi(String? oId,status) async {
