@@ -116,12 +116,10 @@ class _GetDrawerWidgetState extends State<GetDrawerWidget> {
       'Cookie': 'ci_session=8380ff83d04889e6ff2ef0c0cd5e47f95872c1d4'
     };
     var request = http.MultipartRequest('POST', Uri.parse('${baseUrl}online_ofline'));
-    print('____Uri.parse______${request}_________');
     request.fields.addAll({
       'user_id':"${CUR_USERID}",
       'status':status.toString()
     });
-    print('_____request.fields_____${request.fields}_________');
     request.headers.addAll(headers);
     http.StreamedResponse response = await request.send();
     if (response.statusCode == 200) {

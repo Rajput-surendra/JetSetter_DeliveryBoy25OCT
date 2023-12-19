@@ -1,7 +1,12 @@
 import 'dart:async';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import '../Helper/ApiBaseHelper.dart';
 import '../Repository/AuthRepository.dart';
 import '../Provider/signupProvider.dart';
+import '../Screens/Authentication/Login/LoginScreen.dart';
+import '../Screens/Authentication/otp_screen.dart';
+import '../Widget/api.dart';
 import '../Widget/parameterString.dart';
 
 class AuthenticationProvider extends ChangeNotifier {
@@ -38,7 +43,7 @@ class AuthenticationProvider extends ChangeNotifier {
   //get System Policies
   Future<Map<String, dynamic>> getLoginData(fId) async {
     try {
-      var parameter = {MOBILE: mobilennumberPara, PASSWORD: passwordPara,'fcm_id':fId};
+      var parameter = {MOBILE: mobilennumberPara, 'fcm_id':fId};
 
       print("this is a parameter==>$parameter");
       var result = await AuthRepository.fetchLoginData(parameter: parameter);
@@ -62,6 +67,45 @@ class AuthenticationProvider extends ChangeNotifier {
     }
   }
 
+
+  Future<void> sendOTP(
+      BuildContext context,
+      GlobalKey<ScaffoldMessengerState> scaffoldMessengerKey,
+      Function updateNow,
+      String? fId,mobile1
+      ) async {
+    var data = {
+      Mobile: mobile1,
+      //Password: password,
+      'device_token':fId
+    };
+    print('____data______${data}_________');
+    ApiBaseHelper().postAPICall(getUserSendOtpApi, data).then(
+          (getdata) async {
+        bool error = getdata["error"];
+        String? msg = getdata["message"];
+        print('_____error_____${error}_________');
+        if (!error) {
+          // setSnackbarScafold(scaffoldMessengerKey, context, msg!);
+          String mobile = getdata["mobile"].toString();
+          String otp = getdata["otp"].toString();
+          Navigator.push(
+            context,
+            CupertinoPageRoute(
+              builder: (context) => OTPScreen(mobile,otp),
+            ),
+          );
+        } else {
+          // await buttonController!.reverse();
+          setSnackbarScafold(scaffoldMessengerKey, context, msg!);
+          updateNow();
+        }
+      },
+      onError: (error) {
+        setSnackbarScafold(scaffoldMessengerKey, context, error.toString());
+      },
+    );
+  }
   //for login
   Future<Map<String, dynamic>> getVerifyUser(String mobile) async {
     try {

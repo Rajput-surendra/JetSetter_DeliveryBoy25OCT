@@ -555,10 +555,7 @@ class StateHome extends State<Home> with TickerProviderStateMixin {
                                                 child:
                                                     CircularProgressIndicator(),
                                               )
-                                            : OrderIteam(
-                                          lodding: isloding,
-                                                index: index,
-
+                                            : OrderIteam(lodding: isloding, index: index,
                                                 update: setStateNow,onTopReject: (){
                                           acceptRejectApi(homeProvider!.orderList[index].id,"reject");
                                                 },

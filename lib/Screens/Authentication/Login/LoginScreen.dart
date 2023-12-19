@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:deliveryboy_multivendor/Helper/color.dart';
 import 'package:deliveryboy_multivendor/Screens/Authentication/SignUp/sign_up.dart';
 import 'package:deliveryboy_multivendor/Screens/Privacy%20policy/privacy_policy.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +13,7 @@ import '../../../Helper/constant.dart';
 import '../../../Provider/AuthProvider.dart';
 import '../../../Provider/SettingsProvider.dart';
 import '../../../Provider/UserProvider.dart';
+import '../../../Provider/loginProvider.dart';
 import '../../../Widget/ButtonDesing.dart';
 import '../../../Widget/desing.dart';
 import '../../../Widget/networkAvailablity.dart';
@@ -32,10 +34,13 @@ class _LoginPageState extends State<Login> with TickerProviderStateMixin {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final mobileController = TextEditingController();
   final passwordController = TextEditingController();
-
+  final GlobalKey<ScaffoldMessengerState> scaffoldMessengerKey =
+  GlobalKey<ScaffoldMessengerState>();
   FocusNode? passFocus, monoFocus = FocusNode();
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
-
+  setStateNow() {
+    setState(() {});
+  }
 //  String? password, mobile;
   Animation? buttonSqueezeanimation;
   AnimationController? buttonController;
@@ -90,55 +95,13 @@ class _LoginPageState extends State<Login> with TickerProviderStateMixin {
   Future<void> checkNetwork() async {
     isNetworkAvail = await isNetworkAvailable();
     if (isNetworkAvail) {
-      Future.delayed(Duration.zero).then(
-        (value) => context.read<AuthenticationProvider>().getLoginData(fcmToken).then(
-          (
-            value,
-          ) async {
-            print("value****$value");
-            bool error = value["error"];
-            String? msg = value["message"];
-
-            await buttonController!.reverse();
-            if (!error) {
-              var getdata = value['data'][0];
-              UserProvider userProvider =
-                  Provider.of<UserProvider>(context, listen: false);
-
-              userProvider.setName(getdata[USERNAME] ?? '');
-              userProvider.setEmail(getdata[EMAIL] ?? '');
-              userProvider.setUserId(getdata[ID] ?? '');
-              userProvider.setMobile(getdata[MOBILE] ?? '');
-              userProvider.setProfilePic(getdata[IMAGE] ?? '');
-
-              SettingProvider settingProvider =
-                  Provider.of<SettingProvider>(context, listen: false);
-              settingProvider.saveUserDetail(
-                getdata[ID],
-                getdata[USERNAME],
-                getdata[EMAIL],
-                getdata[MOBILE],
-                context,
-              );
-              setPrefrenceBool(isLogin, true);
-              Navigator.pushReplacement(
-                context,
-                CupertinoPageRoute(
-                  builder: (context) => Dashboard(),
-                ),
-              );
-            } else {
-              setSnackbar(msg!, context);
-            }
-          },
-        ),
-      );
+      context.read<AuthenticationProvider>().sendOTP(context, scaffoldMessengerKey, setStateNow,fcmToken,mobileController.text);
     } else {
-      Future.delayed(Duration(seconds: 2)).then(
-        (_) async {
-          await buttonController!.reverse();
+      Future.delayed(const Duration(seconds: 2)).then(
+            (_) async {
+          await context.read<LoginProvider>().buttonController!.reverse();
           setState(
-            () {
+                () {
               isNetworkAvail = false;
             },
           );
@@ -146,6 +109,65 @@ class _LoginPageState extends State<Login> with TickerProviderStateMixin {
       );
     }
   }
+  // Future<void> checkNetwork() async {
+  //   isNetworkAvail = await isNetworkAvailable();
+  //   if (isNetworkAvail) {
+  //     Future.delayed(Duration.zero).then(
+  //       (value) => context.read<AuthenticationProvider>().getLoginData(fcmToken).then(
+  //         (
+  //           value,
+  //         ) async {
+  //           print("value****$value");
+  //           bool error = value["error"];
+  //           String? msg = value["message"];
+  //
+  //           await buttonController!.reverse();
+  //           if (!error) {
+  //             var getdata = value['data'][0];
+  //             UserProvider userProvider =
+  //                 Provider.of<UserProvider>(context, listen: false);
+  //
+  //             userProvider.setName(getdata[USERNAME] ?? '');
+  //             userProvider.setEmail(getdata[EMAIL] ?? '');
+  //             userProvider.setUserId(getdata[ID] ?? '');
+  //             userProvider.setMobile(getdata[MOBILE] ?? '');
+  //             userProvider.setProfilePic(getdata[IMAGE] ?? '');
+  //
+  //             SettingProvider settingProvider =
+  //                 Provider.of<SettingProvider>(context, listen: false);
+  //             settingProvider.saveUserDetail(
+  //               getdata[ID],
+  //               getdata[USERNAME],
+  //               getdata[EMAIL],
+  //               getdata[MOBILE],
+  //               context,
+  //             );
+  //             setPrefrenceBool(isLogin, true);
+  //             Navigator.pushReplacement(
+  //               context,
+  //               CupertinoPageRoute(
+  //                 builder: (context) => Dashboard(),
+  //               ),
+  //             );
+  //           } else {
+  //             setSnackbar(msg!, context);
+  //           }
+  //         },
+  //       ),
+  //     );
+  //   } else {
+  //     Future.delayed(Duration(seconds: 2)).then(
+  //       (_) async {
+  //         await buttonController!.reverse();
+  //         setState(
+  //           () {
+  //             isNetworkAvail = false;
+  //           },
+  //         );
+  //       },
+  //     );
+  //   }
+  // }
 
   bool validateAndSave() {
     final form = _formkey.currentState!;
@@ -453,6 +475,7 @@ class _LoginPageState extends State<Login> with TickerProviderStateMixin {
               btnAnim: buttonSqueezeanimation,
               btnCntrl: buttonController,
               onBtnSelected: () async {
+                print('__________sadasdsadsad_________');
                 validateAndSubmit();
               },
             );
@@ -531,11 +554,16 @@ class _LoginPageState extends State<Login> with TickerProviderStateMixin {
                     signInTxt(),
                     signInSubTxt(),
                     setMobileNo(),
-                    setPass(),
+                    //setPass(),
                     //forgetPass(),
+                    SizedBox(height: 50,),
                     loginBtn(),
-                    signUpBtn(),
-                    termAndPolicyTxt(),
+                    //signUpBtn(),
+                    //termAndPolicyTxt(),
+                    const SizedBox(
+                      height: 10,
+                    ),
+
                   ],
                 ),
               ),
@@ -591,4 +619,25 @@ class _LoginPageState extends State<Login> with TickerProviderStateMixin {
         child: Image.asset('assets/images/PNG/splashlogo.png',height:200,width:200,)
     );
   }
+
+
+}
+setSnackbarScafold(
+    GlobalKey<ScaffoldMessengerState> scafoldkey, contex, String msg) {
+  scafoldkey.currentState!.showSnackBar(
+    SnackBar(
+      content: Text(
+        msg,
+        textAlign: TextAlign.center,
+        style: const TextStyle(
+          color: fontColor,
+        ),
+      ),
+      duration: const Duration(
+        milliseconds: 3000,
+      ),
+      backgroundColor: lightWhite,
+      elevation: 1.0,
+    ),
+  );
 }

@@ -7,6 +7,7 @@ import '../../../Model/order_model.dart';
 import '../../../Widget/desing.dart';
 import '../../../Widget/setSnackbar.dart';
 import '../../../Widget/validation.dart';
+import '../../TrackLlocation/trackDriver.dart';
 
 class SellerDetails extends StatelessWidget {
   Order_Model model;
@@ -114,9 +115,10 @@ class SellerDetails extends StatelessWidget {
                                   size: 15,
                                 ),
                                 onPressed: () {
-                                  _launchMap(
-                                      model.itemList![index].storeLatitude,
-                                      model.itemList![index].storeLongitude);
+                                  Navigator.push(context, MaterialPageRoute(builder: (context) => UserMapScreen(userlat: model.latitude,userlong:model.longitude ,),));
+                                  // _launchMap(
+                                  //     model.itemList![index].storeLatitude,
+                                  //     model.itemList![index].storeLongitude);
                                 },
                               ),
                             )

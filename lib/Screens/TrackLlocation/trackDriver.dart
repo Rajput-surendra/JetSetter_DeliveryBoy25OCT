@@ -682,7 +682,7 @@ class _UserMapScreenState extends State<UserMapScreen> {
     };
     var request = http.MultipartRequest('GET', Uri.parse('${baseUrl}get_lat_lang'));
     request.fields.addAll({
-      'user_id': CUR_USERID.toString(),
+      'user_id':ID
     });
     request.headers.addAll(headers);
     http.StreamedResponse response = await request.send();

@@ -3,6 +3,7 @@
 import '../Helper/constant.dart';
 
 final Uri getUserLoginApi = Uri.parse(baseUrl + 'login');
+final Uri getUserSendOtpApi = Uri.parse('${baseUrl}send_otp');
 final Uri getVerifyUserApi = Uri.parse(baseUrl + 'verify_user');
 final Uri getFundTransferApi = Uri.parse(baseUrl + 'get_fund_transfers');
 final Uri getNotificationApi = Uri.parse(baseUrl + 'get_notifications');

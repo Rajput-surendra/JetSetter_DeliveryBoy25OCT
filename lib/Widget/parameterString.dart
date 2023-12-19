@@ -1,5 +1,9 @@
 import '../Helper/constant.dart';
 
+
+
+const String Mobile = 'mobile';
+const String Password = 'password';
 const String USERNAME = 'username';
 const String ADDRESS = 'address';
 const String EMAIL = 'email';

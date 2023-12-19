@@ -48,7 +48,6 @@ class OrderIteam extends StatelessWidget {
   Widget build(BuildContext context) {
 
     Order_Model model = homeProvider!.orderList[index];
-    print('_____sdsdsd_____${model.activeStatus}_________');
     Color back;
     if ((model.itemList!.first.status!) == DELIVERD)
       back = Colors.green.withOpacity(0.85);

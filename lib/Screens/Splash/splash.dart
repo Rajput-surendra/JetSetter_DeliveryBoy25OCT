@@ -9,6 +9,7 @@ import '../../Provider/SettingsProvider.dart';
 import '../../Widget/parameterString.dart';
 import '../../Widget/systemChromeSettings.dart';
 import '../Authentication/Login/LoginScreen.dart';
+import '../Authentication/send_otp.dart';
 import '../Deshboard/Deshboard.dart';
 
 //splash screen of app
