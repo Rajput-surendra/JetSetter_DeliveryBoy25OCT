@@ -6,6 +6,7 @@ import '../../../Helper/constant.dart';
 import '../../../Model/order_model.dart';
 import '../../../Widget/desing.dart';
 import '../../../Widget/setSnackbar.dart';
+import '../../../Widget/translateVariable.dart';
 import '../../../Widget/validation.dart';
 import '../../TrackLlocation/trackDriver.dart';
 
@@ -52,11 +53,27 @@ class SellerDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+
     return Card(
       elevation: 0,
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(10, 5.0, 0, 5.0),
-        child: Row(
+    padding: const EdgeInsets.fromLTRB(10, 5.0, 0, 5.0),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          getTranslated(context, SELLER_DETAILS)!,
+          style: Theme.of(context).textTheme.titleSmall!.copyWith(
+            fontFamily: 'PlusJakartaSans',
+            color: black,
+            fontSize: textFontSize14,
+            fontWeight: FontWeight.w400,
+            fontStyle: FontStyle.normal,
+          ),
+        ),
+        SizedBox(height: 5,),
+        Row(
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(circularBorderRadius10),
@@ -79,7 +96,7 @@ class SellerDetails extends StatelessWidget {
                     ),
                     child: Text(
                       model.itemList![index].storeName != "" &&
-                              model.itemList![index].storeName!.isNotEmpty
+                          model.itemList![index].storeName!.isNotEmpty
                           ? "${StringValidation.capitalize(model.itemList![index].storeName!)}"
                           : " ",
                       style: TextStyle(
@@ -105,23 +122,20 @@ class SellerDetails extends StatelessWidget {
                         ),
                       ),
                       model.itemList![index].storeLatitude != "" &&
-                              model.itemList![index].storeLongitude != ""
+                          model.itemList![index].storeLongitude != ""
                           ? Container(
-                              height: 25,
-                              child: IconButton(
-                                icon: const Icon(
-                                  Icons.location_on,
-                                  color: primary,
-                                  size: 15,
-                                ),
-                                onPressed: () {
-                                  Navigator.push(context, MaterialPageRoute(builder: (context) => UserMapScreen(userlat: model.latitude,userlong:model.longitude ,),));
-                                  // _launchMap(
-                                  //     model.itemList![index].storeLatitude,
-                                  //     model.itemList![index].storeLongitude);
-                                },
-                              ),
-                            )
+                        height: 40,
+                        width: 120,
+                        child: IconButton(
+                          icon: const Text("Get Direction",style: TextStyle(color: primary,fontSize: 15,fontWeight:FontWeight.bold),),
+                          onPressed: () {
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => UserMapScreen(userlat: model.latitude,userlong:model.longitude ,),));
+                            // _launchMap(
+                            //     model.itemList![index].storeLatitude,
+                            //     model.itemList![index].storeLongitude);
+                          },
+                        ),
+                      )
                           : Container(),
                     ],
                   ),
@@ -163,6 +177,8 @@ class SellerDetails extends StatelessWidget {
             )
           ],
         ),
+      ],
+    )
       ),
     );
   }

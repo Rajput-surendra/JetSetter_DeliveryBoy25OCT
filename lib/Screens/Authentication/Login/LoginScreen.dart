@@ -65,6 +65,9 @@ class _LoginPageState extends State<Login> with TickerProviderStateMixin {
         ),
       ),
     );
+    setState(() {
+
+    });
   }
 
   @override
@@ -474,6 +477,7 @@ class _LoginPageState extends State<Login> with TickerProviderStateMixin {
               title: getTranslated(context, SIGNIN_LBL)!,
               btnAnim: buttonSqueezeanimation,
               btnCntrl: buttonController,
+
               onBtnSelected: () async {
                 print('__________sadasdsadsad_________');
                 validateAndSubmit();

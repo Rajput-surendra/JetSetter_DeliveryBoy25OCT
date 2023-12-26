@@ -47,7 +47,9 @@ class OrderIteam extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
+
     Order_Model model = homeProvider!.orderList[index];
+    print("${model.itemList!.first.status}");
     Color back;
     if ((model.itemList!.first.status!) == DELIVERD)
       back = Colors.green.withOpacity(0.85);
@@ -258,7 +260,7 @@ class OrderIteam extends StatelessWidget {
                   ],
                 ),
               ),
-                if (model.itemList!.first.status=="received") Container(
+                if (model.itemList!.first.status=="processed") Container(
                 margin: EdgeInsets.symmetric(horizontal:15,vertical: 10),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,

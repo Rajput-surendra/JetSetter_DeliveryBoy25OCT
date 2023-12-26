@@ -292,490 +292,508 @@ class StateOrder extends State<OrderDetail> with TickerProviderStateMixin {
 
     return Padding(
       padding: const EdgeInsets.only(top: 10.0),
-      child: Container(
-        width: MediaQuery.of(context).size.width,
-        decoration: BoxDecoration(
-          borderRadius:
-          BorderRadius.all(Radius.circular(circularBorderRadius5)),
-          color: white,
-          boxShadow: const [
-            BoxShadow(
-                color: blarColor,
-                offset: Offset(0, 0),
-                blurRadius: 4,
-                spreadRadius: 0),
-          ],
-        ),
-        child: Padding(
-          padding: const EdgeInsets.only(
-            top: 10.0,
-            bottom: 0,
-            left: 10,
-            right: 10,
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  ClipRRect(
-                    // borderRadius: BorderRadius.circular(10.0),
-                    child: DesignConfiguration.getCacheNotworkImage(
-                      boxFit: BoxFit.cover,
-                      context: context,
-                      heightvalue: 94.0,
-                      imageurlString: orderItem.image!,
-                      placeHolderSize: 150.0,
-                      widthvalue: 64.0,
-                    ),
-                  ),
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 18.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(bottom: 10.0),
-                            child: Text(
-                              orderItem.name ?? '',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleMedium!
-                                  .copyWith(
-                                color: black,
-                                fontWeight: FontWeight.w400,
-                                fontFamily: "PlusJakartaSans",
-                                fontStyle: FontStyle.normal,
-                                fontSize: textFontSize13,
-                              ),
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ),
-                          orderItem.attr_name!.isNotEmpty
-                              ? ListView.builder(
-                            physics: const NeverScrollableScrollPhysics(),
-                            shrinkWrap: true,
-                            itemCount: att.length,
-                            itemBuilder: (context, index) {
+      child: Column(
+        children: [
 
-                              return Padding(
-                                padding:
-                                const EdgeInsets.only(bottom: 10),
+          Container(
+            child: Column(
+              children: [
+
+                SellerDetails(
+                  index: i,
+                  model: widget.model!,
+                ),
+
+              ],
+            ),
+          ),
+          Container(
+            width: MediaQuery.of(context).size.width,
+            decoration: BoxDecoration(
+              borderRadius:
+              BorderRadius.all(Radius.circular(circularBorderRadius5)),
+              color: white,
+              boxShadow: const [
+                BoxShadow(
+                    color: blarColor,
+                    offset: Offset(0, 0),
+                    blurRadius: 4,
+                    spreadRadius: 0),
+              ],
+            ),
+            child: Padding(
+              padding: const EdgeInsets.only(
+                top: 10.0,
+                bottom: 0,
+                left: 10,
+                right: 10,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      ClipRRect(
+                        // borderRadius: BorderRadius.circular(10.0),
+                        child: DesignConfiguration.getCacheNotworkImage(
+                          boxFit: BoxFit.cover,
+                          context: context,
+                          heightvalue: 94.0,
+                          imageurlString: orderItem.image!,
+                          placeHolderSize: 150.0,
+                          widthvalue: 64.0,
+                        ),
+                      ),
+
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 10.0),
+                                child: Text(
+                                  orderItem.name ?? '',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .titleMedium!
+                                      .copyWith(
+                                    color: black,
+                                    fontWeight: FontWeight.w400,
+                                    fontFamily: "PlusJakartaSans",
+                                    fontStyle: FontStyle.normal,
+                                    fontSize: textFontSize13,
+                                  ),
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                              orderItem.attr_name!.isNotEmpty
+                                  ? ListView.builder(
+                                physics: const NeverScrollableScrollPhysics(),
+                                shrinkWrap: true,
+                                itemCount: att.length,
+                                itemBuilder: (context, index) {
+
+                                  return Padding(
+                                    padding:
+                                    const EdgeInsets.only(bottom: 10),
+                                    child: Row(
+                                      children: [
+                                        Flexible(
+                                          child: Text(
+                                            att[index].trim() + ":",
+                                            overflow: TextOverflow.ellipsis,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .titleSmall!
+                                                .copyWith(
+                                              color: grey3,
+                                              fontWeight: FontWeight.w400,
+                                              fontFamily:
+                                              "PlusJakartaSans",
+                                              fontStyle: FontStyle.normal,
+                                              fontSize: textFontSize13,
+                                            ),
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.only(
+                                              left: 5.0),
+                                          child: Text(
+                                            val[index],
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .titleSmall!
+                                                .copyWith(
+                                              color: black,
+                                              fontWeight: FontWeight.w400,
+                                              fontFamily:
+                                              "PlusJakartaSans",
+                                              fontStyle: FontStyle.normal,
+                                              fontSize: textFontSize13,
+                                            ),
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  );
+                                },
+                              )
+                                  : Container(),
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 10),
                                 child: Row(
                                   children: [
-                                    Flexible(
-                                      child: Text(
-                                        att[index].trim() + ":",
-                                        overflow: TextOverflow.ellipsis,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .titleSmall!
-                                            .copyWith(
-                                          color: grey3,
-                                          fontWeight: FontWeight.w400,
-                                          fontFamily:
-                                          "PlusJakartaSans",
-                                          fontStyle: FontStyle.normal,
-                                          fontSize: textFontSize13,
-                                        ),
+                                    Text(
+                                      getTranslated(context, QUANTITY_LBL)! + ":",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleSmall!
+                                          .copyWith(
+                                        color: lightBlack2,
                                       ),
                                     ),
                                     Padding(
-                                      padding: const EdgeInsets.only(
-                                          left: 5.0),
+                                      padding: const EdgeInsets.only(left: 5.0),
                                       child: Text(
-                                        val[index],
+                                        orderItem.qty!,
                                         style: Theme.of(context)
                                             .textTheme
                                             .titleSmall!
                                             .copyWith(
                                           color: black,
-                                          fontWeight: FontWeight.w400,
-                                          fontFamily:
-                                          "PlusJakartaSans",
-                                          fontStyle: FontStyle.normal,
-                                          fontSize: textFontSize13,
                                         ),
                                       ),
                                     )
                                   ],
                                 ),
-                              );
-                            },
-                          )
-                              : Container(),
-                          Padding(
-                            padding: const EdgeInsets.only(bottom: 10),
-                            child: Row(
-                              children: [
-                                Text(
-                                  getTranslated(context, QUANTITY_LBL)! + ":",
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .titleSmall!
-                                      .copyWith(
-                                    color: lightBlack2,
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(left: 5.0),
-                                  child: Text(
-                                    orderItem.qty!,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .titleSmall!
-                                        .copyWith(
-                                      color: black,
-                                    ),
-                                  ),
-                                )
-                              ],
-                            ),
-                          ),
-                          if (orderItem.status == 'return_request_approved' ||
-                              orderItem.status == 'return_request_pending' ||
-                              orderItem.status == 'return_request_decline')
-                            Padding(
-                              padding: const EdgeInsets.only(bottom: 10),
-                              child: Row(
-                                children: [
-                                  Expanded(
-                                      flex: 2,
-                                      child: Text(
-                                        getTranslated(
-                                            context, 'ACTIVE_STATUS_LBL')! +
-                                            ":",
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .titleSmall!
-                                            .copyWith(
-                                          color: lightBlack2,
-                                        ),
-                                      )),
-                                  Expanded(
-                                    flex: 3,
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(left: 5.0),
-                                      child: Text(
-                                            () {
-                                              print('____sdsddsssd______${orderItem.status}_________');
-                                          if (StringValidation.capitalize(
-                                              orderItem.status!) ==
-                                              "Received") {
-                                            return getTranslated(
-                                                context, "received")!;
-                                          }
-                                         //  else if (StringValidation.capitalize(
-                                         //      orderItem.status!) ==
-                                         //      "Processed") {
-                                         //    return getTranslated(
-                                         //        context, "processed")!;
-                                         // }
-                                          if (StringValidation.capitalize(
-                                              orderItem.status!) ==
-                                              "picked") {
-                                            return getTranslated(
-                                                context, "picked")!;
-                                          } else if (StringValidation.capitalize(
-                                              orderItem.status!) ==
-                                              "Delivered") {
-                                            return getTranslated(
-                                                context, "delivered")!;
-                                          // } else if (StringValidation.capitalize(
-                                          //     orderItem.status!) ==
-                                          //     "Returned") {
-                                          //   return getTranslated(
-                                          //       context, "returned")!;
-                                          } else if (StringValidation.capitalize(
-                                              orderItem.status!) ==
-                                              "Cancelled") {
-                                            return getTranslated(
-                                                context, "cancelled")!;
-                                          } else if (StringValidation.capitalize(
-                                              orderItem.status!) ==
-                                              "Return_request_pending") {
-                                            return getTranslated(context,
-                                                "RETURN_REQUEST_PENDING_LBL")!;
-                                          } else if (StringValidation.capitalize(
-                                              orderItem.status!) ==
-                                              "Return_request_approved") {
-                                            return getTranslated(context,
-                                                "RETURN_REQUEST_APPROVE_LBL")!;
-                                          } else if (StringValidation
-                                              .capitalize(
-                                              orderItem.status!) ==
-                                              "Return_request_decline") {
-                                            return getTranslated(context,
-                                                "RETURN_REQUEST_DECLINE_LBL")!;
-                                          }
-                                          return StringValidation.capitalize(
-                                              orderItem.status!);
-                                        }(),
-                                        maxLines: 2,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .titleSmall!
-                                            .copyWith(
-                                          color: black,
-                                        ),
-                                      ),
-                                    ),
-                                  )
-                                ],
                               ),
-                            ),
-                          Text(
-                            "${DesignConfiguration.getPriceFormat(context, double.parse(orderItem.price!))!}",
-                            style: Theme.of(context)
-                                .textTheme
-                                .titleMedium!
-                                .copyWith(
-                              color: primary,
-                              fontWeight: FontWeight.w700,
-                              fontFamily: "PlusJakartaSans",
-                              fontStyle: FontStyle.normal,
-                              fontSize: textFontSize13,
-                            ),
-                          ),
-                          widget.model!.itemList!.first.status == "shipped"
-                              ? widget.model!.itemList!.length >= 1
-                              ? Padding(
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 10.0),
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  flex: 6,
-                                  child: Padding(
-                                    padding:
-                                    const EdgeInsetsDirectional.only(
-                                        end: 8.0),
-                                    child: DropdownButtonFormField(
-                                      dropdownColor: Colors.white,
-                                      isDense: true,
-                                      iconEnabledColor: primary,
-                                      hint: Text(
-                                        getTranslated(
-                                            context, UpdateStatus)!,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .titleSmall!
-                                            .copyWith(
-                                          color: primary,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                      decoration: const InputDecoration(
-                                        filled: true,
-                                        isDense: true,
-                                        fillColor: white,
-                                        contentPadding:
-                                        EdgeInsets.symmetric(
-                                          vertical: 10,
-                                          horizontal: 10,
-                                        ),
-                                        enabledBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                            color: primary,
-                                          ),
-                                        ),
-                                      ),
-                                      value:
-                                      (orderItem.status ==
-                                          'return_request_approved' ||
-                                          orderItem.status ==
-                                              'return_request_pending' ||
-                                          orderItem.status ==
-                                              'return_request_decline')
-                                          ? null
-                                          : orderItem.status == 'shipped' ? 'picked up' : orderItem.status,
-                                      onChanged: (dynamic newValue) {
-                                        setState(
-                                              () {
-                                            orderItem.curSelected =
-                                                newValue;
-                                          },
-                                        );
-                                      },
-                                      items: orderDetailProvider!
-                                          .statusList
-                                          .map(
-                                            (String st) {
-                                          return DropdownMenuItem<String>(
-                                            value: st,
-                                            child: Text(
-                                                  () {
-                                                if (StringValidation
-                                                    .capitalize(st) ==
-                                                    "Received") {
-                                                  return getTranslated(
-                                                      context,
-                                                      "received")!;
-                                                } else if (StringValidation
-                                                    .capitalize(st) ==
-                                                    "Processed") {
-                                                  return getTranslated(
-                                                      context,
-                                                      "processed")!;
-                                               }
-                                                if (StringValidation
-                                                    .capitalize(st) ==
-                                                    "Picked Up") {
-                                                  return getTranslated(
-                                                      context,
-                                                      "Picked Up")!;
-                                                } else if (StringValidation
-                                                    .capitalize(st) ==
-                                                    "Delivered") {
-                                                  return getTranslated(
-                                                      context,
-                                                      "delivered")!;
-                                                }
-                                                // else if (StringValidation
-                                                //     .capitalize(st) ==
+                              if (orderItem.status == 'return_request_approved' ||
+                                  orderItem.status == 'return_request_pending' ||
+                                  orderItem.status == 'return_request_decline')
+                                Padding(
+                                  padding: const EdgeInsets.only(bottom: 10),
+                                  child: Row(
+                                    children: [
+                                      Expanded(
+                                          flex: 2,
+                                          child: Text(
+                                            getTranslated(
+                                                context, 'ACTIVE_STATUS_LBL')! +
+                                                ":",
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .titleSmall!
+                                                .copyWith(
+                                              color: lightBlack2,
+                                            ),
+                                          )),
+                                      Expanded(
+                                        flex: 3,
+                                        child: Padding(
+                                          padding: const EdgeInsets.only(left: 5.0),
+                                          child: Text(
+                                                () {
+                                              print('____sdsddsssd______${orderItem.status}_________');
+                                              if (StringValidation.capitalize(
+                                                  orderItem.status!) ==
+                                                  "Received") {
+                                                return getTranslated(
+                                                    context, "received")!;
+                                              }
+                                              //  else if (StringValidation.capitalize(
+                                              //      orderItem.status!) ==
+                                              //      "Processed") {
+                                              //    return getTranslated(
+                                              //        context, "processed")!;
+                                              // }
+                                              if (StringValidation.capitalize(
+                                                  orderItem.status!) ==
+                                                  "picked") {
+                                                return getTranslated(
+                                                    context, "picked")!;
+                                              } else if (StringValidation.capitalize(
+                                                  orderItem.status!) ==
+                                                  "Delivered") {
+                                                return getTranslated(
+                                                    context, "delivered")!;
+                                                // } else if (StringValidation.capitalize(
+                                                //     orderItem.status!) ==
                                                 //     "Returned") {
                                                 //   return getTranslated(
-                                                //       context,
-                                                //       "returned")!;
-                                                // }
-                                                // else if (StringValidation
-                                                //     .capitalize(st) ==
-                                                //     "Cancelled") {
-                                                //   return getTranslated(
-                                                //       context,
-                                                //       "cancelled")!;
-                                                // }
-                                                // else if (StringValidation
-                                                //               .capitalize(st) ==
-                                                //           "Return_request_pending") {
-                                                //         return getTranslated(
-                                                //             context,
-                                                //             "RETURN_REQUEST_PENDING_LBL")!;
-                                                //       } else if (StringValidation
-                                                //               .capitalize(st) ==
-                                                //           "Return_request_approved") {
-                                                //         return getTranslated(
-                                                //             context,
-                                                //             "RETURN_REQUEST_APPROVE_LBL")!;
-                                                //       } else if (StringValidation
-                                                //               .capitalize(st) ==
-                                                //           "Return_request_decline") {
-                                                //         return getTranslated(
-                                                //             context,
-                                                //             "RETURN_REQUEST_DECLINE_LBL")!;
-                                                //       }
-                                                return StringValidation
-                                                    .capitalize(st);
-                                              }(),
-                                              maxLines: 1,
-                                              overflow:
-                                              TextOverflow.ellipsis,
-                                              softWrap: true,
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .titleSmall!
-                                                  .copyWith(
-                                                color: primary,
-                                                fontWeight:
-                                                FontWeight.bold,
-                                              ),
+                                                //       context, "returned")!;
+                                              } else if (StringValidation.capitalize(
+                                                  orderItem.status!) ==
+                                                  "Cancelled") {
+                                                return getTranslated(
+                                                    context, "cancelled")!;
+                                              } else if (StringValidation.capitalize(
+                                                  orderItem.status!) ==
+                                                  "Return_request_pending") {
+                                                return getTranslated(context,
+                                                    "RETURN_REQUEST_PENDING_LBL")!;
+                                              } else if (StringValidation.capitalize(
+                                                  orderItem.status!) ==
+                                                  "Return_request_approved") {
+                                                return getTranslated(context,
+                                                    "RETURN_REQUEST_APPROVE_LBL")!;
+                                              } else if (StringValidation
+                                                  .capitalize(
+                                                  orderItem.status!) ==
+                                                  "Return_request_decline") {
+                                                return getTranslated(context,
+                                                    "RETURN_REQUEST_DECLINE_LBL")!;
+                                              }
+                                              return StringValidation.capitalize(
+                                                  orderItem.status!);
+                                            }(),
+                                            maxLines: 2,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .titleSmall!
+                                                .copyWith(
+                                              color: black,
                                             ),
-                                          );
-                                        },
-                                      ).toList(),
-                                    ),
+                                          ),
+                                        ),
+                                      )
+                                    ],
                                   ),
                                 ),
-                                Expanded(
-                                  child: RawMaterialButton(
-                                    constraints:
-                                    const BoxConstraints.expand(
-                                      width: 42,
-                                      height: 42,
-                                    ),
-                                    onPressed: () {
-                                      if (orderItem.item_otp != "" &&
-                                          orderItem
-                                              .item_otp!.isNotEmpty &&
-                                          orderItem.item_otp != "0" &&
-                                          orderItem.curSelected ==
-                                              DELIVERD) {
-                                        GetOtpDailog.otpDialog(
-                                          orderItem.curSelected,
-                                          orderItem.item_otp,
-                                          model.id,
-                                          true,
-                                          i,
-                                          context,
-                                          model,
-                                          setStateNow,
-                                        );
-                                      } else {
-                                        orderDetailProvider!.updateOrder(
-                                          orderItem.curSelected,
-                                          model.id,
-                                          true,
-                                          i,
-                                          orderItem.item_otp,
-                                          setStateNow,
-                                          context,
-                                          widget.model,
-                                        );
-                                      }
-                                    },
-                                    elevation: 2.0,
-                                    fillColor: primary,
-                                    padding:
-                                    const EdgeInsets.only(left: 5),
-                                    child: const Align(
-                                      alignment: Alignment.center,
-                                      child: Icon(
-                                        Icons.send,
-                                        size: 20,
-                                        color: white,
+                              Text(
+                                "${DesignConfiguration.getPriceFormat(context, double.parse(orderItem.price!))!}",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleMedium!
+                                    .copyWith(
+                                  color: primary,
+                                  fontWeight: FontWeight.w700,
+                                  fontFamily: "PlusJakartaSans",
+                                  fontStyle: FontStyle.normal,
+                                  fontSize: textFontSize13,
+                                ),
+                              ),
+                              widget.model!.itemList!.first.status == "shipped"
+                                  ? widget.model!.itemList!.length >= 1
+                                  ? Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: 10.0),
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                      flex: 6,
+                                      child: Padding(
+                                        padding:
+                                        const EdgeInsetsDirectional.only(
+                                            end: 8.0),
+                                        child: DropdownButtonFormField(
+                                          dropdownColor: Colors.white,
+                                          isDense: true,
+                                          iconEnabledColor: primary,
+                                          hint: Text(
+                                            getTranslated(
+                                                context, UpdateStatus)!,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .titleSmall!
+                                                .copyWith(
+                                              color: primary,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                          decoration: const InputDecoration(
+                                            filled: true,
+                                            isDense: true,
+                                            fillColor: white,
+                                            contentPadding:
+                                            EdgeInsets.symmetric(
+                                              vertical: 10,
+                                              horizontal: 10,
+                                            ),
+                                            enabledBorder: OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color: primary,
+                                              ),
+                                            ),
+                                          ),
+                                          value:
+                                          (orderItem.status ==
+                                              'return_request_approved' ||
+                                              orderItem.status ==
+                                                  'return_request_pending' ||
+                                              orderItem.status ==
+                                                  'return_request_decline')
+                                              ? null
+                                              : orderItem.status == 'shipped' ? 'picked up' : orderItem.status,
+                                          onChanged: (dynamic newValue) {
+                                            setState(
+                                                  () {
+                                                print(newValue.toString()+"________________________");
+                                                if(newValue.toString()=="picked up"){
+                                                  orderItem.curSelected="shipped";
+                                                }
+                                                else{
+                                                  orderItem.curSelected =
+                                                      newValue;
+                                                }
+
+                                              },
+                                            );
+                                          },
+                                          items: orderDetailProvider!
+                                              .statusList
+                                              .map(
+                                                (String st) {
+                                              return DropdownMenuItem<String>(
+                                                value: st,
+                                                child: Text(
+                                                      () {
+                                                    if (StringValidation
+                                                        .capitalize(st) ==
+                                                        "Received") {
+                                                      return getTranslated(
+                                                          context,
+                                                          "received")!;
+                                                    } else if (StringValidation
+                                                        .capitalize(st) ==
+                                                        "Processed") {
+                                                      return getTranslated(
+                                                          context,
+                                                          "processed")!;
+                                                    }
+                                                    if (StringValidation
+                                                        .capitalize(st) ==
+                                                        "Picked Up") {
+                                                      return getTranslated(
+                                                          context,
+                                                          "shipped")!;
+                                                    } else if (StringValidation
+                                                        .capitalize(st) ==
+                                                        "Delivered") {
+                                                      return getTranslated(
+                                                          context,
+                                                          "delivered")!;
+                                                    }
+                                                    // else if (StringValidation
+                                                    //     .capitalize(st) ==
+                                                    //     "Returned") {
+                                                    //   return getTranslated(
+                                                    //       context,
+                                                    //       "returned")!;
+                                                    // }
+                                                    // else if (StringValidation
+                                                    //     .capitalize(st) ==
+                                                    //     "Cancelled") {
+                                                    //   return getTranslated(
+                                                    //       context,
+                                                    //       "cancelled")!;
+                                                    // }
+                                                    // else if (StringValidation
+                                                    //               .capitalize(st) ==
+                                                    //           "Return_request_pending") {
+                                                    //         return getTranslated(
+                                                    //             context,
+                                                    //             "RETURN_REQUEST_PENDING_LBL")!;
+                                                    //       } else if (StringValidation
+                                                    //               .capitalize(st) ==
+                                                    //           "Return_request_approved") {
+                                                    //         return getTranslated(
+                                                    //             context,
+                                                    //             "RETURN_REQUEST_APPROVE_LBL")!;
+                                                    //       } else if (StringValidation
+                                                    //               .capitalize(st) ==
+                                                    //           "Return_request_decline") {
+                                                    //         return getTranslated(
+                                                    //             context,
+                                                    //             "RETURN_REQUEST_DECLINE_LBL")!;
+                                                    //       }
+                                                    return StringValidation
+                                                        .capitalize(st);
+                                                  }(),
+                                                  maxLines: 1,
+                                                  overflow:
+                                                  TextOverflow.ellipsis,
+                                                  softWrap: true,
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .titleSmall!
+                                                      .copyWith(
+                                                    color: primary,
+                                                    fontWeight:
+                                                    FontWeight.bold,
+                                                  ),
+                                                ),
+                                              );
+                                            },
+                                          ).toList(),
+                                        ),
                                       ),
                                     ),
-                                    shape: const CircleBorder(),
-                                  ),
-                                )
-                              ],
-                            ),
-                          )
-                              : Container() : SizedBox()
-                        ],
-                      ),
-                    ),
-                  )
+                                    Expanded(
+                                      child: RawMaterialButton(
+                                        constraints:
+                                        const BoxConstraints.expand(
+                                          width: 42,
+                                          height: 42,
+                                        ),
+                                        onPressed: () {
+                                          if (orderItem.item_otp != "" &&
+                                              orderItem
+                                                  .item_otp!.isNotEmpty &&
+                                              orderItem.item_otp != "0" &&
+                                              orderItem.curSelected ==
+                                                  DELIVERD) {
+                                            GetOtpDailog.otpDialog(
+                                              orderItem.curSelected,
+                                              orderItem.item_otp,
+                                              model.id,
+                                              true,
+                                              i,
+                                              context,
+                                              model,
+                                              setStateNow,
+                                            );
+                                          } else {
+                                            orderDetailProvider!.updateOrder(
+                                              orderItem.curSelected,
+                                              model.id,
+                                              true,
+                                              i,
+                                              orderItem.item_otp,
+                                              setStateNow,
+                                              context,
+                                              widget.model,
+                                            );
+                                          }
+                                        },
+                                        elevation: 2.0,
+                                        fillColor: primary,
+                                        padding:
+                                        const EdgeInsets.only(left: 5),
+                                        child: const Align(
+                                          alignment: Alignment.center,
+                                          child: Icon(
+                                            Icons.send,
+                                            size: 20,
+                                            color: white,
+                                          ),
+                                        ),
+                                        shape: const CircleBorder(),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              )
+                                  : Container() : SizedBox()
+                            ],
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+
+
+                  // ExpansionTile(
+                  //   children: [
+                  //
+                  //   ],
+                  //   title:
+                  // )
                 ],
               ),
-              ExpansionTile(
-                children: [
-                  SellerDetails(
-                    index: i,
-                    model: widget.model!,
-                  ),
-                ],
-                title: Text(
-                  getTranslated(context, SELLER_DETAILS)!,
-                  style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                    fontFamily: 'PlusJakartaSans',
-                    color: black,
-                    fontSize: textFontSize14,
-                    fontWeight: FontWeight.w400,
-                    fontStyle: FontStyle.normal,
-                  ),
-                ),
-              )
-            ],
+            ),
           ),
-        ),
-      ),
+        ],
+      )
+
+
     );
   }
 }

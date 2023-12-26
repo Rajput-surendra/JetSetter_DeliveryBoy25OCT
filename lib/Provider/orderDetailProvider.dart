@@ -33,11 +33,11 @@ class OrderDetailProvider extends ChangeNotifier {
 
   initializeVariable() {
     statusList = [
-      PLACED,
+      // PLACED,
       //PROCESSED,
       SHIPED,
       DELIVERD,
-     // CANCLED,
+      CANCLED,
     //  RETURNED,
      // WAITING,
      //   'return_request_pending',

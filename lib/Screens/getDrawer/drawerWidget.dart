@@ -112,6 +112,7 @@ class _GetDrawerWidgetState extends State<GetDrawerWidget> {
     );
   }
   getStatus(int status) async {
+    print('__________________');
     var headers = {
       'Cookie': 'ci_session=8380ff83d04889e6ff2ef0c0cd5e47f95872c1d4'
     };
@@ -125,6 +126,7 @@ class _GetDrawerWidgetState extends State<GetDrawerWidget> {
     if (response.statusCode == 200) {
       var result  = await response.stream.bytesToString();
       var finalResult =  jsonDecode(result);
+      print('finalResult__________${finalResult}_________');
       setState(() {
 
       });
@@ -135,7 +137,41 @@ class _GetDrawerWidgetState extends State<GetDrawerWidget> {
     }
 
   }
-  int status = 0; // 0: Offline, 1: Online
+  getStatus1() async {
+    print('__________________');
+    var headers = {
+      'Cookie': 'ci_session=8380ff83d04889e6ff2ef0c0cd5e47f95872c1d4'
+    };
+    var request = http.MultipartRequest('POST', Uri.parse('${baseUrl}get_online_status'));
+    request.fields.addAll({
+      'user_id':"${CUR_USERID}",
+
+    });
+    request.headers.addAll(headers);
+    http.StreamedResponse response = await request.send();
+    if (response.statusCode == 200) {
+      var result  = await response.stream.bytesToString();
+      var finalResult =  jsonDecode(result);
+      print('finalResult__________${finalResult}_________');
+      setState(() {
+      status=int.parse(finalResult["data"].toString());
+      });
+      setSnackbar(finalResult['message'], context);
+    }
+    else {
+      print(response.reasonPhrase);
+    }
+
+  }
+
+  int status = 0;
+  @override
+  void initState() {
+    // TODO: implement initState
+    getStatus1();
+    super.initState();
+  }
+   // 0: Offline, 1: Online
   @override
   Widget build(BuildContext context) {
     return Scaffold(

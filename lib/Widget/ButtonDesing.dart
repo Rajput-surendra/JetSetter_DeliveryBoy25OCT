@@ -77,6 +77,7 @@ class AppBtn extends StatelessWidget {
       padding: EdgeInsets.only(top: 20),
       child: CupertinoButton(
         child: Container(
+
           width: btnAnim!.value,
           height: 45,
           alignment: FractionalOffset.center,
